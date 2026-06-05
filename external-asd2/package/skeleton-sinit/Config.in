@@ -1,0 +1,4 @@
+config BR2_PACKAGE_SKELETON_SINIT
+    bool
+    select BR2_PACKAGE_HAS_SKELETON
+

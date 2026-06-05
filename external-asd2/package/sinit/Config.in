@@ -1,0 +1,7 @@
+config BR2_PACKAGE_SINIT
+        bool "sinit"
+        help
+          suckless init
+
+          https://stagit.suckless.org/sinit/file/README.html
+

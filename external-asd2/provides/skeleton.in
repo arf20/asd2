@@ -1,0 +1,9 @@
+config BR2_ROOTFS_SKELETON_SINIT
+    bool "sinit skeleton"
+    select BR2_PACKAGE_SKELETON_SINIT
+
+config BR2_PACKAGE_PROVIDES_SKELETON
+    string
+    default "skeleton-default" if BR2_PACKAGE_SKELETON_DEFAULT
+    default "skeleton-sinit" if BR2_PACKAGE_SKELETON_SINIT
+
