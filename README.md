@@ -27,7 +27,9 @@ ARF Software Distribution Version 2
  - lock screen [dmenu](https://tools.suckless.org/slock/)
  - status line [dmenu](https://tools.suckless.org/slstatus/)
  - X terminal emulator [st](https://st.suckless.org/)
- - web browser [surt](https://surf.suckless.org/)
+ - web browser [surf](https://surf.suckless.org/)
+ - compiler [gcc](https://bellard.org/tcc/)
+ - editor [vim](https://www.vim.org/)
 
 
 ## Build
