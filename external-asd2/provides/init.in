@@ -3,10 +3,3 @@ config BR2_INIT_SINIT
     select BR2_PACKAGE_SINIT
     select BR2_PACKAGE_SKELETON_INIT_SINIT if BR2_ROOTFS_SKELETON_DEFAULT
 
-config BR2_PACKAGE_PROVIDES_INIT
-    string
-    default "busybox" if BR2_INIT_BUSYBOX
-    default "systemd" if BR2_INIT_SYSTEMD
-    default "openrc" if BR2_INIT_OPENRC
-    default "sinit" if BR2_INIT_SINIT
-

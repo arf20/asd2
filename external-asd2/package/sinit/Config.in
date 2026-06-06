@@ -5,3 +5,10 @@ config BR2_PACKAGE_SINIT
 
           https://stagit.suckless.org/sinit/file/README.html
 
+config BR2_PACKAGE_PROVIDES_INIT
+    string
+    default "sinit" if BR2_INIT_SINIT
+    default "busybox" if BR2_INIT_BUSYBOX
+    default "systemd" if BR2_INIT_SYSTEMD
+    default "openrc" if BR2_INIT_OPENRC
+
