@@ -1,0 +1,7 @@
+config BR2_PACKAGE_SBASE
+        bool "sbase"
+        help
+          suckless unix tools
+
+          https://git.suckless.org/sbase/file/README.html
+

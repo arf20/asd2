@@ -1,0 +1,7 @@
+config BR2_PACKAGE_UBASE
+        bool "ubase"
+        help
+          suckless linux base utils
+
+          https://git.suckless.org/ubase/file/README.html
+

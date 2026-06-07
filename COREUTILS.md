@@ -1,0 +1,187 @@
+# coreutils
+
+## skeleton
+
+ - poweroff
+ - reboot
+
+## sbase
+
+ - basename
+ - cal
+ - cat
+ - chgrp
+ - chmod
+ - chown
+ - chroot
+ - cksum
+ - cmp
+ - cols
+ - comm
+ - cp
+ - cron
+ - cut
+ - date
+ - dd
+ - dirname
+ - du
+ - echo
+ - ed
+ - env
+ - expand
+ - expr
+ - false
+ - find
+ - flock
+ - fold
+ - getconf (-v)
+ - grep
+ - head
+ - hostname
+ - install
+ - join
+ - kill
+ - link
+ - ln
+ - logger
+ - logname
+ - ls (-C, -k, -m, -p, -s, -x)
+ - make (-j)
+ - md5sum
+ - mkdir
+ - mkfifo
+ - mknod
+ - mktemp
+ - mv (-i)
+ - nice
+ - nl
+ - nohup
+ - od
+ - paste
+ - pathchk
+ - printenv
+ - printf
+ - pwd
+ - readlink
+ - renice
+ - rev
+ - rm
+ - rmdir
+ - sed
+ - seq
+ - setsid
+ - sha1sum
+ - sha224sum
+ - sha256sum
+ - sha384sum
+ - sha512sum
+ - sha512-224sum
+ - sha512-256sum
+ - sleep
+ - sort
+ - split
+ - sponge
+ - strings
+ - sync
+ - tail
+ - tar
+ - tee
+ - test
+ - tftp
+ - time
+ - touch
+ - tr
+ - true
+ - tsort
+ - tty
+ - uname
+ - unexpand
+ - uniq
+ - unlink
+ - uudecode
+ - uuencode
+ - wc
+ - which
+ - whoami
+ - xargs
+ - yes
+
+## ubase
+
+ - blkdiscard
+ - chvt
+ - clear
+ - ctrlaltdel
+ - dd
+ - df
+ - dmesg
+ - eject
+ - fallocate
+ - free
+ - freeramdisk
+ - fsfreeze
+ - getty
+ - halt
+ - hwclock
+ - id
+ - insmod
+ - killall5
+ - last
+ - lastlog
+ - login
+ - lsmod
+ - lsusb
+ - mesg
+ - mknod
+ - mkswap
+ - mount
+ - mountpoint
+ - nologin
+ - pagesize
+ - passwd
+ - pidof
+ - pivot_root
+ - ps
+ - pwdx
+ - readahead
+ - respawn
+ - rmmod
+ - stat
+ - su
+ - swaplabel
+ - swapoff
+ - swapon
+ - switch_root
+ - sysctl
+ - truncate
+ - umount
+ - unshare
+ - uptime
+ - vtallow
+ - watch
+ - who
+
+## hbase
+
+ - awk
+ - bc
+ - cp
+ - dc
+ - diff
+ - ed
+ - expr
+ - find
+ - fmt
+ - grep
+ - hd
+ - lex
+ - mk
+ - od
+ - patch
+ - pgrep
+ - printf
+ - ps
+ - sed
+ - stty
+ - yacc
+
