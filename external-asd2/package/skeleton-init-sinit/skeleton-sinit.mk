@@ -1,6 +1,6 @@
 ################################################################################
 #
-# skeleton-init-openrc
+# skeleton-init-sinit
 #
 ################################################################################
 
@@ -18,7 +18,8 @@ SKELETON_INIT_SINIT_PROVIDES = skeleton
 SKELETON_INIT_SINIT_INSTALL_STAGING = YES
 
 define SKELETON_INIT_SINIT_INSTALL_TARGET_CMDS
-	$(call SYSTEM_RSYNC,$(SKELETON_INIT_SINIT_PKGDIR)/skeleton,$(TARGET_DIR))
+	$(call SYSTEM_RSYNC,$(SKELETON_INIT_SINIT_PKGDIR)/skeleton/bin,$(TARGET_DIR)/bin)
+	$(call SYSTEM_RSYNC,$(SKELETON_INIT_SINIT_PKGDIR)/skeleton/etc,$(TARGET_DIR)/etc)
 endef
 
 $(eval $(generic-package))
