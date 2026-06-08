@@ -8,6 +8,7 @@
 ## sbase
 
  - basename
+ - bc
  - cal
  - cat
  - chgrp
@@ -112,7 +113,7 @@
  - chvt
  - clear
  - ctrlaltdel
- - dd
+ - dd (faster than sbase?)
  - df
  - dmesg
  - eject
@@ -132,7 +133,7 @@
  - lsmod
  - lsusb
  - mesg
- - mknod
+ - mknod (duplicated in sbase)
  - mkswap
  - mount
  - mountpoint
@@ -164,24 +165,24 @@
 ## hbase
 
  - awk
- - bc
- - cp
+ - bc (duplicated in sbase)
+ - cp (faster than sbase?)
  - dc
  - diff
- - ed
- - expr
- - find
+ - ed (duplicated in sbase)
+ - expr (duplicated in sbase)
+ - find (duplicated in sbase)
  - fmt
- - grep
+ - grep (duplicated in sbase)
  - hd
  - lex
  - mk
- - od
+ - od (duplicated in sbase)
  - patch
  - pgrep
- - printf
- - ps
- - sed
+ - printf (duplicated in sbase)
+ - ps (duplicated in ubase)
+ - sed (duplicated in ubase)
  - stty
  - yacc
 
