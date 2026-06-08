@@ -1,0 +1,31 @@
+From 1f3abbe1b063b6dbf79745e69b97c61d1e33a622 Mon Sep 17 00:00:00 2001
+From: arf20 <aruizfernandez05@gmail.com>
+Date: Mon, 8 Jun 2026 12:01:23 +0200
+Subject: [PATCH] Verbose build
+
+---
+ Makefile | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index b79e3d8..be8f110 100644
+--- a/Makefile
++++ b/Makefile
+@@ -39,12 +39,10 @@ config.h:
+ 	@cp config.def.h $@
+ 
+ .o:
+-	@echo LD $@
+-	@$(LD) -o $@ $< util.a $(LDFLAGS)
++	$(LD) -o $@ $< util.a $(LDFLAGS)
+ 
+ .c.o:
+-	@echo CC $<
+-	@$(CC) -c -o $@ $< $(CFLAGS)
++	$(CC) -c -o $@ $< $(CFLAGS)
+ 
+ util.a: $(LIB)
+ 	@echo AR $@
+-- 
+2.47.3
+

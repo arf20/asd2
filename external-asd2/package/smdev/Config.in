@@ -1,0 +1,7 @@
+config BR2_PACKAGE_SMDEV
+        bool "smdev"
+        help
+          suckless mdev
+
+          https://git.suckless.org/smdev/file/README.html
+

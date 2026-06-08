@@ -5,9 +5,7 @@ umask 022
 . /etc/rc.conf
 
 echo
-echo
 echo "         ASD2 booting"
-echo
 echo
 
 # Soft reboot on ctrl-alt-del
@@ -24,10 +22,10 @@ echo
 
 /bin/mount -o remount,ro /
 
-echo Running smdev
+echo == Running smdev
 /bin/smdev -s
 
-echo Setting smdev as the kernel hotplug
+echo == Setting smdev as the kernel hotplug
 echo /bin/smdev > /proc/sys/kernel/hotplug
 
 # HACK!
@@ -38,7 +36,7 @@ cd /dev
 /bin/ln -sf /proc/self/fd fd
 cd - 1>/dev/null
 
-echo Checking filesystems
+echo == Checking filesystems
 /bin/fsck -ATa
 if [ $? -eq 1 ]; then
 	echo Filesystem errors exist, fix manually.
@@ -46,18 +44,18 @@ if [ $? -eq 1 ]; then
 	/bin/halt -r
 fi
 
-echo Remounting root as read-write
+echo == Remounting root as read-write
 /bin/mount -o remount,rw /
 
-echo Mounting filesystems
+echo == Mounting filesystems
 /bin/mount -a
 
 ln -sf /proc/mounts /etc/mtab
 
-echo "Setting hostname to $HOSTNAME"
+echo "== Setting hostname to $HOSTNAME"
 /bin/hostname $HOSTNAME
 
-echo Bringing up the lo interface
+echo == Bringing up the lo interface
 /bin/ip addr add 127.0.0.1/8 dev lo broadcast + scope host
 /bin/ip link set lo up
 
@@ -83,11 +81,11 @@ if [ -n "$HWCLOCK_PARAMS" ]; then
 	unset TZ
 fi
 
-echo Setting random seed
+echo == Setting random seed
 [ -f /etc/random-seed ] && /bin/cat /etc/random-seed >/dev/urandom
 /bin/dd if=/dev/urandom of=/etc/random-seed count=1 bs=512 2>/dev/null
 
-echo Storing dmesg output to /var/log/dmesg.log
+echo == Storing dmesg output to /var/log/dmesg.log
 /bin/dmesg > /var/log/dmesg.log
 if [ -e /proc/sys/kernel/dmesg_restrict ] && [ $(/bin/cat /proc/sys/kernel/dmesg_restrict) = "1" ];
 then
@@ -96,21 +94,21 @@ else
 	/bin/chmod 0644 /var/log/dmesg.log
 fi
 
-echo Enabling core dumps
+echo == Enabling core dumps
 ulimit -c unlimited
 
 if [ -x /bin/rc.modules ]; then
-	echo Running rc.modules
+	echo == Running rc.modules
 	/bin/rc.modules
 fi
 
 if [ -x /bin/rc.svc ]; then
-	echo Running rc.svc
+	echo == Running rc.svc
 	/bin/rc.svc
 fi
 
 if [ -x /bin/rc.local ]; then
-	echo Running rc.local
+	echo == Running rc.local
 	/bin/rc.local
 fi
 

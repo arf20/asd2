@@ -1,0 +1,37 @@
+From 3a14a5843634415fb37ffd02ad8c5dac57ac042a Mon Sep 17 00:00:00 2001
+From: arf20 <arf20@arf20.com>
+Date: Mon, 8 Jun 2026 11:11:23 +0200
+Subject: [PATCH 1/1] Fixed building on contemporary systems
+
+---
+ config.mk | 2 +-
+ smdev.c   | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/config.mk b/config.mk
+index b1e7ae4..aa55667 100644
+--- a/config.mk
++++ b/config.mk
+@@ -6,6 +6,6 @@ PREFIX = /usr/local
+ 
+ CC = cc
+ LD = $(CC)
+-CPPFLAGS = -D_BSD_SOURCE -D_GNU_SOURCE
++CPPFLAGS = -D_XOPEN_SOURCE=700 -D_GNU_SOURCE
+ CFLAGS   = -std=c99 -Wall -pedantic $(CPPFLAGS)
+ LDFLAGS  = -s
+diff --git a/smdev.c b/smdev.c
+index b774908..092ed31 100644
+--- a/smdev.c
++++ b/smdev.c
+@@ -2,6 +2,7 @@
+ #include <sys/ioctl.h>
+ #include <sys/stat.h>
+ #include <sys/types.h>
++#include <sys/sysmacros.h>
+ 
+ #include <linux/sockios.h>
+ #include <linux/if_packet.h>
+-- 
+2.47.3
+
