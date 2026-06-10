@@ -1,0 +1,7 @@
+config BR2_PACKAGE_NLMON
+        bool "nlmon"
+        help
+          NetLink MONitor; a lightweight udevadm monitor replacement.
+
+          https://r-36.net/scm/nlmon/
+

@@ -1,0 +1,7 @@
+config BR2_PACKAGE_NLDEV
+        bool "nldev"
+        help
+          NetLink DEVice manager; a lightweight netlink frontend for mdev.
+
+          https://r-36.net/scm/nldev/file/README.md.html
+

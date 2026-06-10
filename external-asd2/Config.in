@@ -3,4 +3,6 @@ source "$BR2_EXTERNAL_asd2_PATH/package/skeleton-init-sinit/Config.in"
 source "$BR2_EXTERNAL_asd2_PATH/package/sbase/Config.in"
 source "$BR2_EXTERNAL_asd2_PATH/package/ubase/Config.in"
 source "$BR2_EXTERNAL_asd2_PATH/package/smdev/Config.in"
+source "$BR2_EXTERNAL_asd2_PATH/package/nldev/Config.in"
+source "$BR2_EXTERNAL_asd2_PATH/package/nlmon/Config.in"
 

@@ -1,0 +1,4 @@
+#!/bin/sh
+test -n "$MODALIAS" && modprobe "$MODALIAS";
+exec /bin/smdev
+

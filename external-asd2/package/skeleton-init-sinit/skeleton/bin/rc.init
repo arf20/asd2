@@ -26,7 +26,7 @@ echo == Running smdev
 /bin/smdev -s
 
 echo == Setting smdev as the kernel hotplug
-echo /bin/smdev > /proc/sys/kernel/hotplug
+echo /sbin/hotplug > /proc/sys/kernel/hotplug
 
 # HACK!
 cd /dev

@@ -12,19 +12,21 @@ ARF Software Distribution Version 2
  - [X] shell [mksh](http://www.mirbsd.org/mksh.htm)\*
  - [X] libc [musl libc](https://musl.libc.org/)\*
  - [X] init [sinit](https://core.suckless.org/sinit/)
- - [ ] dev manager (replaces udevd) [smdev](https://git.suckless.org/smdev/)
+ - [X] dev manager (replaces udevd) [smdev](https://git.suckless.org/smdev/)
  - [ ] netlink dev manager (missing piece of smdev) [nldev](https://r-36.net/scm/nldev/)
  - [ ] netdev monitor (nldev little brother) [nlmon](https://r-36.net/scm/nlmon/)
- - [ ] awk [one true awk](https://github.com/onetrueawk/awk)
  - [ ] service manager [svc](https://r-36.net/scm/svc/)
  - [X] coreutils [sbase](https://git.suckless.org/sbase/)
  - [X] coreutils [ubase](https://git.suckless.org/ubase/)
  - [ ] coreutils [hbase](https://git.2f30.org/hbase/)
- - [ ] manpage reader [man-db](https://man-db.gitlab.io/man-db/)
+ - [ ] awk [one true awk](https://github.com/onetrueawk/awk)
  - [X] pager [less](https://www.greenwoodsoftware.com/less/)\*
- - [X] fs tools [f2fs-tools](https://www.kernel.org/doc/html/latest/filesystems/f2fs.html)\*
+ - [ ] manpage reader [man-db](https://man-db.gitlab.io/man-db/)
  - [X] network manager [iproute2](https://wiki.linuxfoundation.org/networking/iproute2)\*
  - [ ] dhcp client [sdhcp](http://git.2f30.org/sdhcp/)
+ - [X] fs tools [f2fs-tools](https://www.kernel.org/doc/html/latest/filesystems/f2fs.html)\*
+ - [ ] compiler [gcc](https://gcc.gnu.org/)
+ - [X] editor [vim](https://www.vim.org/)
  - [ ] display server [xlibre](https://x11libre.net/)
  - [ ] window manager [dwm](https://dwm.suckless.org/)
  - [ ] launcher [dmenu](https://tools.suckless.org/dmenu/)
@@ -33,8 +35,6 @@ ARF Software Distribution Version 2
  - [ ] X terminal emulator [st](https://st.suckless.org/)
  - [ ] web browser [surf](https://surf.suckless.org/)
  - [ ] tabber [tabbed](https://tools.suckless.org/tabbed/)
- - [ ] compiler [gcc](https://gcc.gnu.org/)
- - [X] editor [vim](https://www.vim.org/)
 
 
 ## Build
