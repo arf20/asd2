@@ -28,7 +28,6 @@ endef
 
 define NLDEV_INSTALL_TARGET_CMDS
     VERSION=$(NLDEV_VERSION) $(MAKE) $(TARGET_CONFIGURE_OPTS) PREFIX=$(TARGET_DIR)$(NLDEV_PREFIX) -C $(@D) install
-	$(INSTALL) -D -m 0755 $(NLDEV_PKGDIR)/hotplug $(TARGET_DIR)/sbin/hotplug
 endef
 
 $(eval $(generic-package))
