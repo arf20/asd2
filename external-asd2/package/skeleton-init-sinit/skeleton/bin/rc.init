@@ -75,7 +75,7 @@ case $HARDWARECLOCK in
 esac
 
 if [ -n "$HWCLOCK_PARAMS" ]; then
-	echo Setting hwclock
+	echo == Setting hwclock
 	[ -n "$TIMEZONE" ] && export TZ="$TIMEZONE"
 	/bin/hwclock $HWCLOCK_PARAMS /dev/rtc0
 	unset TZ
@@ -114,9 +114,11 @@ fi
 
 : > /var/run/utmp
 
-echo
+echo == Spawning gettys
 /bin/sh -c '/bin/respawn /bin/getty /dev/tty1 linux' &>/dev/null &
 /bin/sh -c '/bin/respawn /bin/getty /dev/tty2 linux' &>/dev/null &
 /bin/sh -c '/bin/respawn /bin/getty /dev/tty3 linux' &>/dev/null &
 /bin/sh -c '/bin/respawn /bin/getty /dev/tty4 linux' &>/dev/null &
+
+#exec /bin/sh
 
