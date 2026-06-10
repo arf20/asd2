@@ -1,0 +1,8 @@
+PRETTY_NAME="ARF Software Distribution Version 2"
+NAME="ARF Software Distribution"
+VERSION_ID="2"
+VERSION="Version 2"
+VERSION_CODENAME=asdf
+ID=asd
+HOME_URL="https://github.com/arf20/asd2/"
+
