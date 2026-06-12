@@ -1,0 +1,22 @@
+From d091789ec3ad6e0871a082e5dea686d476ff8b04 Mon Sep 17 00:00:00 2001
+From: arf20 <aruizfernandez05@gmail.com>
+Date: Fri, 12 Jun 2026 05:12:38 +0200
+Subject: [PATCH] Change shebang to mksh
+
+---
+ run_nldev | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/run_nldev b/run_nldev
+index 683c443..fe3e512 100755
+--- a/run_nldev
++++ b/run_nldev
+@@ -1,4 +1,4 @@
+-#!/bin/busybox ash
++#!/bin/mksh
+ 
+ if [ -e /proc/self/fd ];
+ then
+-- 
+2.47.3
+

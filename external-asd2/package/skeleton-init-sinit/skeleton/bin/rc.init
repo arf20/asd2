@@ -28,6 +28,11 @@ echo == Running smdev
 echo == Setting smdev as the kernel hotplug
 echo /sbin/hotplug > /proc/sys/kernel/hotplug
 
+echo == Running nldev
+run_nldev &
+echo == Triggering nldev
+nltrigger all
+
 # HACK!
 cd /dev
 /bin/ln -sf /proc/self/fd/0 stdin
