@@ -30,6 +30,13 @@ endef
 define SMDEV_INSTALL_TARGET_CMDS
     VERSION=$(SMDEV_VERSION) $(MAKE) $(TARGET_CONFIGURE_OPTS) PREFIX=$(TARGET_DIR)$(SMDEV_PREFIX) -C $(@D) install
 	$(INSTALL) -D -m 0755 $(SMDEV_PKGDIR)/hotplug $(TARGET_DIR)/sbin/hotplug
+	$(INSTALL) -d -m 0755 $(TARGET_DIR)/lib/smdev
+	$(INSTALL) -D -m 0755 $(SMDEV_PKGDIR)/lib/smdev/dvbdev $(TARGET_DIR)/lib/smdev/dvbdev
+	$(INSTALL) -D -m 0755 $(SMDEV_PKGDIR)/lib/smdev/inputdev $(TARGET_DIR)/lib/smdev/inputdev
+	$(INSTALL) -D -m 0755 $(SMDEV_PKGDIR)/lib/smdev/sddev $(TARGET_DIR)/lib/smdev/sddev
+	$(INSTALL) -D -m 0755 $(SMDEV_PKGDIR)/lib/smdev/ttydev $(TARGET_DIR)/lib/smdev/ttydev
+	$(INSTALL) -D -m 0755 $(SMDEV_PKGDIR)/lib/smdev/usb $(TARGET_DIR)/lib/smdev/usb
+	ln -s sddev $(TARGET_DIR)/lib/smdev/hddev
 endef
 
 $(eval $(generic-package))

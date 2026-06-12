@@ -1,0 +1,99 @@
+#!/bin/mksh
+
+# $DEVNAME
+# $ACTION
+
+blkidstr=$(blkid $(pwd)/${DEVNAME})
+UUID=$(echo -n "$blkidstr" \
+	| grep UUID \
+	| sed -e 's,.*UUID="\([^"]*\)".*,\1,')
+LABEL=$(echo -n "$blkidstr" \
+	| grep LABEL \
+	| sed -e 's,.*LABEL="\([^"]*\)".*,\1,')
+
+BLOCK=""
+[ -e /sys${DEVPATH}/dev ] && BLOCK=$(cat /sys${DEVPATH}/dev)
+
+case "$ACTION" in
+	add|"")
+		if [ -n "${UUID}" ];
+		then
+			mkdir -p disk/by-uuid
+			cd disk/by-uuid
+			[ -e "${UUID}" ] && rm -f ${UUID}
+			ln -s ../../${DEVNAME} ${UUID}
+			cd ../..
+		fi
+
+		if [ -n "${LABEL}" ];
+		then
+			mkdir -p disk/by-label
+			cd disk/by-uuid
+			[ -e "${LABEL}" ] && rm -f ${LABEL}
+			ln -s ../../${DEVNAME} ${LABEL}
+			cd ../..
+		fi
+
+		if [ -n "${BLOCK}" ];
+		then
+			mkdir -p block
+			cd block
+			[ -e "${BLOCK}" ] && rm -f ${BLOCK}
+			ln -s ../${DEVNAME} ${BLOCK}
+			cd ..
+		fi
+		;;
+	remove)
+		[ -n "${UUID}" ] && [ -e disk/by-uuid/${UUID} ] \
+			&& rm -f disk/by-uuid/${UUID}
+		[ -n "${LABEL}" ] && [ -e disk/by-uuid/${LABEL} ] \
+			&& rm -f disk/by-uuid/${LABEL}
+		[ -n "${BLOCK}" ] && [ -e block/${BLOCK} ] \
+			&& rm -f block/${BLOCK}
+
+		if [ -e disk/by-uuid ];
+		then
+			cd disk/by-uuid
+			SLS=$(ls -l \
+				| awk "/..\/..\/${DEVNAME}/ {print \$9 }")
+			for FILE in ${SLS};
+			do
+				rm -f ${FILE}
+			done
+			cd ../..
+			
+			rmdir disk/by-uuid 2>/dev/null
+		fi
+		if [ -e disk/by-label ];
+		then
+			cd disk/by-label
+			SLS=$(ls -l \
+				| awk "/..\/..\/${DEVNAME}/ {print \$9 }")
+			for FILE in ${SLS};
+			do
+				rm -f ${FILE}
+			done
+			cd ../..
+			
+			rmdir disk/by-label 2>/dev/null
+		fi
+		rmdir disk/ 2>/dev/null
+
+		if [ -e block ];
+		then
+			cd block
+			SLS=$(ls -l \
+				| awk "/..\/${DEVNAME}/ {print \$9 }")
+			for FILE in ${SLS};
+			do
+				rm -f ${FILE}
+			done
+			cd ..
+			
+			rmdir block 2>/dev/null
+		fi
+		;;
+esac
+
+exit 0
+

@@ -1,0 +1,52 @@
+#!/bin/mksh
+
+#
+# This will work, but it is a useless overhead for every tty
+# that might be created. Only use it, if there is really some
+# dirty compatibility with udev that won't resolve otherwise!
+# You have been warned!
+#
+
+# $DEVNAME
+# $ACTION
+
+if [ "${DEVNAME}" = "console" ] || [ "${DEVNAME}" = "null" ];
+then
+	chmod 600 ${DEVNAME}
+fi
+
+CHAR=""
+[ -e /sys${DEVPATH}/dev ] && CHAR=$(cat /sys${DEVPATH}/dev)
+
+case "$ACTION" in
+	add|"")
+		if [ -n "${CHAR}" ];
+		then
+			mkdir -p char
+			cd char
+			[ -e "${CHAR}" ] && rm -f ${CHAR}
+			ln -s ../${DEVNAME} ${CHAR}
+			cd ..
+		fi
+		;;
+	remove)
+		[ -e char/${CHAR} ] && rm -f char/${CHAR}
+
+		if [ -e char ];
+		then
+			cd char
+			SLS=$(ls -l \
+				| awk "/..\/${DEVNAME}/ {print \$9 }")
+			for FILE in ${SLS};
+			do
+				rm -f ${FILE}
+			done
+			cd ..
+			
+			rmdir char 2>/dev/null
+		fi
+		;;
+esac
+
+exit 0
+

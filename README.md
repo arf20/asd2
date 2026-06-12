@@ -2,6 +2,8 @@
 
 ARF Software Distribution Version 2
 
+Fuckass protest about everything distro
+
 ## Supported hardware
 
  - x86

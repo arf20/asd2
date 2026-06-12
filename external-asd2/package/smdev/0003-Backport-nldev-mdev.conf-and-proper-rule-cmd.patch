@@ -1,0 +1,288 @@
+From 3ca615b33963f2b88c13ea29a4cb269267ca2475 Mon Sep 17 00:00:00 2001
+From: arf20 <aruizfernandez05@gmail.com>
+Date: Fri, 12 Jun 2026 02:14:12 +0200
+Subject: [PATCH] Backport nldev mdev.conf and proper rule cmd
+
+---
+ config.def.h | 210 ++++++++++++++++++++++++++++++++++++++++++++++-----
+ smdev.c      |  13 +---
+ 2 files changed, 194 insertions(+), 29 deletions(-)
+
+diff --git a/config.def.h b/config.def.h
+index 94e3d58..8a00442 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -1,4 +1,12 @@
+-/* See LICENSE file for copyright and license details. */
++/* See LICENSE file for copyright and license details.
++ * Modified porting nldev mdev.conf example */
++
++/*
++ * supported mdev path syntax: [=path][>path][!]
++ * cmd syntax:  [@|$|*cmd args...] first character is ignored
++ * cmdenv: ACTION, DEVPATH
++ */
++
+ struct rule {
+ 	const char *devregex;
+ 	const char *user;
+@@ -7,37 +15,199 @@ struct rule {
+ 	const char *path;
+ 	const char *cmd;
+ } rules[] = {
+-	{ "null",         "root", "root",  0666, NULL,      NULL                           },
+-	{ "zero",         "root", "root",  0666, NULL,      NULL                           },
+-	{ "full",         "root", "root",  0666, NULL,      NULL                           },
+-	{ "random",       "root", "root",  0666, NULL,      NULL                           },
+-	{ "urandom",      "root", "root",  0444, NULL,      NULL                           },
+-	{ "hwrandom",     "root", "root",  0660, NULL,      NULL                           },
+-	{ "mem",          "root", "root",  0640, NULL,      NULL                           },
+-	{ "kmem",         "root", "root",  0640, NULL,      NULL                           },
+-	{ "port",         "root", "root",  0640, NULL,      NULL                           },
++	/* tty */
+ 	{ "console",      "root", "tty",   0600, NULL,      NULL                           },
++	{ "pty.*",        "root", "tty",   0660, NULL,      NULL                           },
+ 	{ "ptmx",         "root", "tty",   0666, NULL,      NULL                           },
+ 	{ "tty",          "root", "tty",   0666, NULL,      NULL                           },
+ 	{ "tty[0-9]",     "root", "root",  0600, NULL,      NULL                           },
+ 	{ "tty[0-9][0-9]","root", "tty",   0660, NULL,      NULL                           },
+-	{ "ttyS[0-9]*",   "root", "tty",   0660, NULL,      NULL,                          },
+-	{ "pty.*",        "root", "tty",   0660, NULL,      NULL                           },
+ 	{ "vcs[0-9]*",    "root", "tty",   0660, NULL,      NULL                           },
+ 	{ "vcsa*[0-9]*",  "root", "tty",   0660, NULL,      NULL                           },
+-	{ "sd[a-z].*",    "root", "disk",  0660, NULL,      NULL                           },
++
++	/* serial */
++	{ "ttyS[0-9]*",   "root", "dialout", 0660, NULL,    NULL,                          },
++	{ "ppox[0-9]*",   "root", "dialout", 0660, NULL,    NULL,                          },
++	{ "ircomm[0-9]*", "root", "dialout", 0660, NULL,    NULL,                          },
++	{ "noz[0-9]*",    "root", "dialout", 0660, NULL,    NULL,                          },
++	{ "rfcomm[0-9]*", "root", "dialout", 0660, NULL,    NULL,                          },
++	{ "mwave",        "root", "dialout", 0660, NULL,    NULL,                          },
++	{ "hvc.*",        "root", "dialout", 0660, NULL,    NULL,                          },
++	{ "hvci.*",       "root", "dialout", 0660, NULL,    NULL,                          },
++	
++	{ "ttyUSB[0-9]*", "root", "dialout", 0660, NULL,    NULL,                          },
++	{ "ttyACM[0-9]*", "root", "dialout", 0660, NULL,    NULL,                          },
++
++	{ "ttyLTM[0-9]*", "root", "dialout", 0660, NULL,    NULL,                          },
++	{ "ttySHSF[0-9]*","root", "dialout", 0660, NULL,    NULL,                          },
++	{ "slamr",        "root", "dialout", 0660, NULL,    NULL,                          },
++	{ "slusb",        "root", "dialout", 0660, NULL,    NULL,                          },
++
++	/* virtio serial */
++	{ "vport.*",      "root", "tty",     0660, NULL,    NULL,                          },
++
++	/* mem */
++	{ "null",         "root", "root",  0666, NULL,      "@chmod 666 $DEVNAME"          },
++	{ "zero",         "root", "root",  0666, NULL,      NULL                           },
++	{ "full",         "root", "root",  0666, NULL,      NULL                           },
++	{ "random",       "root", "root",  0666, NULL,      NULL                           },
++	{ "urandom",      "root", "root",  0666, NULL,      NULL                           },
++	{ "hwrandom",     "root", "root",  0444, NULL,      NULL                           },
++	{ "hw_random",    "root", "root",  0444, "=hwrng",  NULL                           },
++	{ "grsec",        "root", "root",  0660, NULL,      NULL                           },
++	{ "mem",          "root", "kmem",  0640, NULL,      NULL                           },
++	{ "kmem",         "root", "kmem",  0640, NULL,      NULL                           },
++	{ "port",         "root", "kmem",  0640, NULL,      NULL                           },
++	{ "nvram",        "root", "kmem",  0640, NULL,      NULL                           },
++
++	/* input */
++	{ "input/event[0-9]*","root", "root", 0640, NULL,   "*/lib/smdev/inputdev"         },
++	{ "input/js[0-9]*",   "root", "root", 0644, NULL,   NULL                           },
++	{ "input/.*",         "root", "root", 0640, NULL,   NULL                           },
++
++	/* v4l */
++	{ "vttuner.*",    "root", "video", 0660,  ">v4l/",  NULL                           },
++	{ "video.*",      "root", "video", 0660,  ">v4l/",  NULL                           },
++	{ "vtx.*",        "root", "video", 0660,  ">v4l/",  NULL                           },
++	{ "vbi.*",        "root", "video", 0660,  ">v4l/",  NULL                           },
++	{ "winradio.*",   "root", "video", 0660,  ">v4l/",  NULL                           },
++	{ "v4l.*",        "root", "video", 0660,  ">v4l/",  NULL                           },
++
++	/* graphics */
++	{ "agppart",      "root", "video", 0660, NULL,      NULL                           },
++	{ "pmu",          "root", "video", 0660, NULL,      NULL                           },
++	{ "nvidia.*",     "root", "video", 0660, NULL,      NULL                           },
++	{ "nvidiactl.*",  "root", "video", 0660, NULL,      NULL                           },
++	{ "fb[0-9]*",     "root", "video", 0660, NULL,      NULL                           },
++
++	/* dri */
++	{ "card[0-9]*",    "root", "video", 0660, "=dri/",  NULL                           },
++	{ "controlD[0-9]*","root", "video", 0660, "=dri/",  NULL                           },
++
++	/* dvb */
++	{ "dvb.*",        "root", "video", 0660, NULL,      "*/lib/smdev/dvbdev",          },
++
++	/* usb */
++	{ "bus/usb/.*",   "root", "root",  0665, NULL,      "*/lib/smdev/usb",             },
++
++	/* printer */
++	{ "parport[0-9]*","root", "lp",    0660, NULL,      NULL                           },
++	{ "parport_pc",   "root", "lp",    0660, NULL,      NULL                           },
++	{ "lp[0-9]*",     "root", "lp",    0660, NULL,      NULL                           },
++	{ "irlpt[0-9]*",  "root", "lp",    0660, NULL,      NULL                           },
++
++	/* block devices */
++	{ "ram[0-9]*",    "root", "disk",  0660, NULL,      NULL                           },
++	{ "loop[0-9]*",   "root", "disk",  0660, NULL,      NULL                           },
++	{ "sd[!a-z].*",   "root", "disk",  0660, NULL,      "*/lib/smdev/sddev",           },
++	{ "hd[!a-z].*",   "root", "disk",  0660, NULL,      "*/lib/smdev/sddev",           },
++	{ "control",      "root", "root",  0000, "=mapper/", NULL                          },
++	{ "md.*",         "root", "disk",  0660, NULL,      NULL                           },
++	{ "mtd.*",        "root", "disk",  0660, NULL,      NULL                           },
++	{ "gnbd.*",       "root", "disk",  0660, NULL,      NULL                           },
++	{ "btibm.*",      "root", "disk",  0660, NULL,      NULL                           },
++	{ "dm-.*",        "root", "disk",  0660, NULL,      NULL                           },
++	{ "vd.*",         "root", "disk",  0660, NULL,      NULL                           },
++	{ "sg.*",         "root", "disk",  0660, NULL,      NULL                           },
++
++	/* floppy */
++	{ "fd[0-9]",      "root", "disk",  0660, NULL,      NULL                           },
++
++	/* optical */
+ 	{ "sr[0-9]*",     "root", "cdrom", 0660, NULL,      "@ln -sf $DEVNAME /dev/cdrom"  },
+-	{ "ts[0-9]+",     "root", "root",  0640, "=input/", NULL                           },
+-	{ "input/.*",     "root", "root",  0640, "=input/", NULL                           },
+-	{ "dri/.*",       "root", "video", 0660, "=dri/",   NULL                           },
++	{ "pktcdvd[0-9]*","root", "cdrom", 0660, "=pktcdvd/", NULL                         },
++	{ "pktcdvd",      "root", "cdrom", 0660, "=pktcdvd/control", NULL                  },
++
++	/* tape */
++	{ "ht[0-9]*",     "root", "tape",  0660, NULL,      NULL                           },
++	{ "nht[0-9]*",    "root", "tape",  0660, NULL,      NULL                           },
++	{ "pt[0-9]*",     "root", "tape",  0660, NULL,      NULL                           },
++	{ "npt[0-9]*",    "root", "tape",  0660, NULL,      NULL                           },
++	{ "pht[0-9]*",    "root", "tape",  0660, NULL,      NULL                           },
++	{ "st*[0-9]*",    "root", "tape",  0660, NULL,      NULL                           },
++	{ "nst*[0-9]*",   "root", "tape",  0660, NULL,      NULL                           },
++
++	/* block-related */
++	{ "scsi.*/.*",    "root", "disk",  0660, "!",       NULL                           },
++	{ "bdi.*/.*",     "root", "disk",  0660, "!",       NULL                           },
++
++	{ "sch[0-9]*",    "root", "disk",  0660, NULL,      NULL                           },
++	{ "pg[0-9]*",     "root", "disk",  0660, NULL,      NULL                           },
++
++	{ "qft[0-9]*",    "root", "disk",  0660, NULL,      NULL                           },
++	{ "nqft[0-9]*",   "root", "disk",  0660, NULL,      NULL                           },
++	{ "zqft[0-9]*",   "root", "disk",  0660, NULL,      NULL                           },
++	{ "nzqft[0-9]*",  "root", "disk",  0660, NULL,      NULL                           },
++	{ "rawqft[0-9]*", "root", "disk",  0660, NULL,      NULL                           },
++	{ "nrawqft[0-9]*", "root", "disk", 0660, NULL,      NULL                           },
++
++	{ "rawctl",       "root", "disk",  0660, "=raw/",   NULL                           },
++	{ "raw[0-9]*",    "root", "disk",  0660, "=raw/",   NULL                           },
++	{ "aoe.*",        "root", "disk",  0660, "=etherd/", NULL                          },
++	{ "bsg/.*",       "root", "disk",  0660, "=bsg/",   NULL                           },
++
++	/* audio */
+ 	{ "snd/.*",       "root", "audio", 0660, "=snd/",   NULL                           },
++
++	{ "hpet",         "root", "audio", 0660, "=snd/",   NULL                           },
++
++	{ "adsp",         "root", "audio", 0660, "=snd/",   NULL                           },
++	{ "audio",        "root", "audio", 0660, "=snd/",   NULL                           },
++	{ "dsp",          "root", "audio", 0660, "=snd/",   NULL                           },
++	{ "mixer",        "root", "audio", 0660, "=snd/",   NULL                           },
++	{ "sequencer.*",  "root", "audio", 0660, "=snd/",   NULL                           },
+ 	{ "midi.*",       "root", "audio", 0660, "=snd/",   NULL                           },
+ 	{ "seq",          "root", "audio", 0660, "=snd/",   NULL                           },
+ 	{ "timer",        "root", "audio", 0660, "=snd/",   NULL                           },
+-	{ "rtc[0-9]*",    "root", "root",  0664, NULL,      NULL                           },
+-	{ "vbi[0-9]",     "root", "video", 0660, NULL,      NULL                           },
+-	{ "video[0-9]",   "root", "video", 0660, NULL,      NULL                           },
+-	{ "fuse",         "root", "root",  0666, NULL,      NULL                           },
++
++	/* network */
++	{ "-net/.*",      "root", "root",  0600, NULL,      "@nameif"                      },
++	{ "tun",          "root", "root",  0666, "=net/",   NULL                           },
++	{ "tun[0-9]*",    "root", "root",  0600, "=net/",   NULL                           },
++	{ "tap[0-9]*",    "root", "root",  0600, "=net/",   NULL                           },
++	{ "rfkill",       "root", "root",  64,   NULL,      NULL                           },
++
++	/* cpu */
++	{ "cpu([0-9]+)",  "root", "root",  0444, "=cpu/%1/cpuid", NULL                     },
++	{ "msr([0-9]+)",  "root", "root",  0600, "=cpu/%1/msr", NULL                       },
++	{ "microcode",    "root", "root",  0600, "=cpu/microcode", NULL                    },
++
++	/* fuse */
++	{ "fuse",         "root", "root",  0666, NULL,      "@/bin/mount -t fusectl fusectl /sys/fs/fuse/connections"},
++
++	/* raid controllers */
++	{ "cciss.*",      "root", "disk",  0660, NULL,      NULL                           },
++	{ "ida.*",        "root", "disk",  0660, NULL,      NULL                           },
++	{ "rd.*",         "root", "disk",  0660, NULL,      NULL                           },
++
++	/* misc */
++	{ "ppp",          "root", "root",  0000, NULL,      NULL                           },
++	{ "kvm",          "root", "root",  0660, NULL,      NULL                           },
++	{ "rtc",          "root", "root",  0664, NULL,      NULL                           },
++	{ "rtc[0-9]*",    "root", "root",  0664, NULL,      "@ln -sf $DEVNAME rtc"         },
++	{ "mmtimer",      "root", "root",  0644, NULL,      NULL                           },
++	{ "rflash[0-9]*", "root", "root",  0400, NULL,      NULL                           },
++	{ "rrom[0-9]*",   "root", "root",  0400, NULL,      NULL                           },
++
++	{ "auer[0-9]*",   "root", "root",  0660, "=usb/",   NULL                           },
++	{ "sxctl",        "root", "root",  0660, "=specialix_sxctl", NULL                  },
++	{ "rioctl",       "root", "root",  0660, "=specialix_rioctl", NULL                 },
++	{ "iowarrior[0-9]*", "root", "root", 0660, "=usb/", NULL                           },
++	{ "hiddev[0-9]*", "root", "root",  0660, "=usb/",    NULL                          },
++	{ "legousbtower[0-9]*", "root", "root", 0660, "=usb/", NULL                        },
++	{ "dabusb[0-9]*", "root", "root",  0660, "=usb/",   NULL                           },
++	{ "usbdpfp[0-9]*", "root", "root", 0660, "=usb/",   NULL                           },
++	{ "cpad[0-9]*",   "root", "root",  0660, "=usb/",   NULL                           },
++
++	/* arch */
++	{ "sgi_.*",       "root", "root", 0666,  NULL,      NULL                           },
++	{ "iseries/ibmsis.*", "root", "root", 0666, NULL,   NULL                           },
++	{ "iseries/nvt.*", "root", "root", 0666, NULL,      NULL                           },
++	{ "iseries/vt.*", "root", "root",  0666, NULL,      NULL                           },
++	{ "iseries/vtty.*", "root", "root", 0666, NULL,     NULL                           },
++	{ "z90crypt",     "root", "root",  0666, NULL,      NULL                           },
++
++	{ "ts[0-9]+",     "root", "root",  0640, "=input/", NULL                           },
+ 	{ ".*",           "root", "root",  0660, NULL,      NULL                           },
+ };
+ 
+diff --git a/smdev.c b/smdev.c
+index 092ed31..1cda27c 100644
+--- a/smdev.c
++++ b/smdev.c
+@@ -166,13 +166,6 @@ matchrule(int ruleidx, char *devname)
+ 	return 0;
+ }
+ 
+-static void
+-runrulecmd(struct rule *rule)
+-{
+-	if (rule->cmd)
+-		system(&rule->cmd[1]);
+-}
+-
+ static void
+ parsepath(struct rule *rule, struct rulepath *rpath,
+ 	  const char *devname)
+@@ -239,7 +232,8 @@ removedev(struct event *ev)
+ 	if(rule->cmd) {
+ 		if (chdir("/dev") < 0)
+ 			eprintf("chdir /dev:");
+-		runrulecmd(rule);
++		if (rule->cmd && (rule->cmd[0] == '$' || rule->cmd[0] == '*'))
++			system(&rule->cmd[1]);
+ 	}
+ 
+ 	if (chdir(ocwd) < 0)
+@@ -333,7 +327,8 @@ runrule:
+ 	if(rule->cmd) {
+ 		if (chdir("/dev") < 0)
+ 			eprintf("chdir /dev:");
+-		runrulecmd(rule);
++		if (rule->cmd && (rule->cmd[0] == '@' || rule->cmd[0] == '*'))
++			system(&rule->cmd[1]);
+ 	}
+ 
+ 	if (chdir(ocwd) < 0)
+-- 
+2.47.3
+

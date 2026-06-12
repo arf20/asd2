@@ -1,0 +1,56 @@
+#!/bin/mksh
+
+set +x
+
+[ -n "$DEVNAME" ] || exit 0
+[ "$SUBSYSTEM" = "input" ] || exit 0
+
+MDEV=$(basename ${DEVNAME})
+BPATH="input"
+SPATH="/sys${DEVPATH}"
+
+NAME=""
+if [ -e ${SPATH} ];
+then
+	NAME=$(cat ${SPATH}/../name)
+fi
+
+printf "bpath = '%s'; spath = '%s'; name = '%s';\n" "$BPATH" "$SPATH" "$NAME" \
+	| logger -t daemon
+
+cd $BPATH
+case "$ACTION" in
+        add|"")	
+		#mv ../$MDEV .
+
+		case "$NAME" in
+			"TPPS/2 IBM TrackPoint")
+				ln -fs $MDEV mouse
+				;;
+			"AT Translated Set 2 keyboard")
+				ln -fs $MDEV kbd
+				;;
+			"ThinkPad Extra Buttons")
+				ln -fs $MDEV extrabuttons
+				;;
+		esac
+                ;;
+        remove)
+		#rm -f $MDEV
+
+		case "$NAME" in
+			"TPPS/2 IBM TrackPoint")
+				rm -f mouse
+				;;
+			"AT Translated Set 2 keyboard")
+				rm -f kbd
+				;;
+			"ThinkPad Extra Buttons")
+				rm -f extrabuttons
+				;;
+		esac
+                ;;
+esac
+
+exit 0
+
