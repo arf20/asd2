@@ -10,6 +10,8 @@ Fuckass protest about everything distro
 
 ## Software
 
+### Core
+
  - [X] skeleton [fs](https://git.2f30.org/fs/files.html)
  - [X] shell [mksh](http://www.mirbsd.org/mksh.htm)\*
  - [X] libc [musl libc](https://musl.libc.org/)\*
@@ -25,11 +27,61 @@ Fuckass protest about everything distro
  - [X] pager [less](https://www.greenwoodsoftware.com/less/)\*
  - [ ] manpage reader [man-db](https://man-db.gitlab.io/man-db/)
  - [X] network manager [iproute2](https://wiki.linuxfoundation.org/networking/iproute2)\*
+ - [X] bridge-utils
+ - [X] iputils
  - [ ] dhcp client [sdhcp](http://git.2f30.org/sdhcp/)
- - [X] fs tools [f2fs-tools](https://www.kernel.org/doc/html/latest/filesystems/f2fs.html)\*
+ - [X] fs tools [f2fs-progs](https://www.kernel.org/doc/html/latest/filesystems/f2fs.html)\*
+ - [X] bzip2
+ - [X] gzip
+ - [X] xz
+ - [X] ztd
+ - [X] binutils
+ - [X] tar
+
+### Services
+
+ - [ ] acpid
+ - [ ] alsa
+ - [ ] atd
+ - [ ] barebone
+ - [X] crond
+ - [ ] cupsd
+ - [ ] dovecot
+ - [ ] fancontrol
+ - [ ] gpsd
+ - [ ] hostapd
+ - [ ] hwclock
+ - [ ] input-event-daemon
+ - [ ] laptop-mode
+ - [ ] nscd
+ - [X] ntpd
+ - [ ] oscam
+ - [ ] rfkill
+ - [ ] rfkilld
+ - [X] sensors
+ - [X] sshd
+ - [X] syslog-ng
+ - [ ] thinkfan
+ - [ ] wireless-regdom
+ - [X] xinetd
+
+### Applications
+
  - [ ] compiler [gcc](https://gcc.gnu.org/)
  - [X] editor [vim](https://www.vim.org/)
- - [ ] display server [xlibre](https://x11libre.net/)
+ - [X] git
+ - [X] pkgconfig
+ - [X] tree
+ - [X] sensors
+ - [X] irssi
+ - [X] netcat
+ - [X] traceroute
+ - [X] wget
+ - [X] whois
+ - [X] neofetch
+ - [X] htop
+ - [X] ssh
+ - [ ] display server [xorg](https://x.org/)
  - [ ] window manager [dwm](https://dwm.suckless.org/)
  - [ ] launcher [dmenu](https://tools.suckless.org/dmenu/)
  - [ ] lock screen [slock](https://tools.suckless.org/slock/)
