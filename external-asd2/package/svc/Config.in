@@ -1,0 +1,7 @@
+config BR2_PACKAGE_SVC
+        bool "svc"
+        help
+          Simple service scripts and examples, to be used everywhere.
+
+          https://r-36.net/scm/svc/file/README.md.html
+

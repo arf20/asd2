@@ -17,7 +17,7 @@ Fuckass protest about everything distro
  - [X] dev manager (replaces udevd) [smdev](https://git.suckless.org/smdev/)
  - [X] netlink dev manager (missing piece of smdev) [nldev](https://r-36.net/scm/nldev/)
  - [X] netdev monitor (nldev little brother) [nlmon](https://r-36.net/scm/nlmon/)
- - [ ] service manager [svc](https://r-36.net/scm/svc/)
+ - [X] service manager [svc](https://r-36.net/scm/svc/)
  - [X] coreutils [sbase](https://git.suckless.org/sbase/)
  - [X] coreutils [ubase](https://git.suckless.org/ubase/)
  - [ ] coreutils [hbase](https://git.2f30.org/hbase/)
