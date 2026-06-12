@@ -15,8 +15,8 @@ Fuckass protest about everything distro
  - [X] libc [musl libc](https://musl.libc.org/)\*
  - [X] init [sinit](https://core.suckless.org/sinit/)
  - [X] dev manager (replaces udevd) [smdev](https://git.suckless.org/smdev/)
- - [ ] netlink dev manager (missing piece of smdev) [nldev](https://r-36.net/scm/nldev/)
- - [ ] netdev monitor (nldev little brother) [nlmon](https://r-36.net/scm/nlmon/)
+ - [X] netlink dev manager (missing piece of smdev) [nldev](https://r-36.net/scm/nldev/)
+ - [X] netdev monitor (nldev little brother) [nlmon](https://r-36.net/scm/nlmon/)
  - [ ] service manager [svc](https://r-36.net/scm/svc/)
  - [X] coreutils [sbase](https://git.suckless.org/sbase/)
  - [X] coreutils [ubase](https://git.suckless.org/ubase/)
