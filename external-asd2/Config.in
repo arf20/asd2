@@ -6,4 +6,5 @@ source "$BR2_EXTERNAL_asd2_PATH/package/smdev/Config.in"
 source "$BR2_EXTERNAL_asd2_PATH/package/nldev/Config.in"
 source "$BR2_EXTERNAL_asd2_PATH/package/nlmon/Config.in"
 source "$BR2_EXTERNAL_asd2_PATH/package/svc/Config.in"
+source "$BR2_EXTERNAL_asd2_PATH/package/sdhcp/Config.in"
 

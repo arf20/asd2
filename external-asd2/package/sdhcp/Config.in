@@ -1,0 +1,7 @@
+config BR2_PACKAGE_SDHCP
+        bool "sdhcp"
+        help
+          simple dhcp client
+
+          https://git.2f30.org/sdhcp/
+
