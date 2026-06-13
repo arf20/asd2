@@ -2,7 +2,11 @@
 
 ARF Software Distribution Version 2
 
-Fuckass protest about everything distro
+Source-based Unix-like linux distro based on Buildroot
+
+i.e. Fuckass protest about everything distro: no Red Hat, no systemd, (almost) no GNU software
+
+This is what you could call close to a suckless distro (DISCLAIMER: I am not associated with suckless)
 
 ## Supported hardware
 
@@ -29,7 +33,7 @@ Fuckass protest about everything distro
  - [X] network manager [iproute2](https://wiki.linuxfoundation.org/networking/iproute2)\*
  - [X] bridge-utils
  - [X] iputils
- - [ ] dhcp client [sdhcp](http://git.2f30.org/sdhcp/)
+ - [X] dhcp client [sdhcp](http://git.2f30.org/sdhcp/)
  - [X] fs tools [f2fs-progs](https://www.kernel.org/doc/html/latest/filesystems/f2fs.html)\*
  - [X] bzip2
  - [X] gzip
@@ -69,18 +73,20 @@ Fuckass protest about everything distro
 
  - [ ] compiler [gcc](https://gcc.gnu.org/)
  - [X] editor [vim](https://www.vim.org/)
+ - [ ] media player [mpv]()
  - [X] git
  - [X] pkgconfig
  - [X] tree
  - [X] sensors
- - [X] irssi
- - [X] netcat
+ - [X] irc client [irssi]()
+ - [X] mail client [mutt]()
+ - [X] netcat [netcat]()
  - [X] traceroute
  - [X] wget
  - [X] whois
  - [X] neofetch
  - [X] htop
- - [X] ssh
+ - [X] ssh [openssh](https://www.openssh.org/)
  - [ ] display server [xorg](https://x.org/)
  - [ ] window manager [dwm](https://dwm.suckless.org/)
  - [ ] launcher [dmenu](https://tools.suckless.org/dmenu/)

@@ -1,0 +1,31 @@
+--- buildroot-2026.02/Makefile.old	2026-06-13 01:06:05.873647480 +0200
++++ buildroot-2026.02/Makefile	2026-06-13 01:06:57.114165486 +0200
+@@ -743,28 +743,9 @@
+ 	@$(call MESSAGE,"Finalizing target directory")
+ 	$(call per-package-rsync,$(sort $(PACKAGES)),target,$(TARGET_DIR),copy)
+ 	$(foreach hook,$(TARGET_FINALIZE_HOOKS),$($(hook))$(sep))
+-	rm -rf $(TARGET_DIR)/usr/include $(TARGET_DIR)/usr/share/aclocal \
+-		$(TARGET_DIR)/usr/lib/pkgconfig $(TARGET_DIR)/usr/share/pkgconfig \
+-		$(TARGET_DIR)/usr/lib/cmake $(TARGET_DIR)/usr/share/cmake \
+-		$(TARGET_DIR)/usr/lib/rpm $(TARGET_DIR)/usr/doc
+ 	find $(TARGET_DIR)/usr/{lib,share}/ -name '*.cmake' -print0 | xargs -0 rm -f
+ 	find $(TARGET_DIR)/lib/ $(TARGET_DIR)/usr/lib/ $(TARGET_DIR)/usr/libexec/ \
+ 		\( -name '*.a' -o -name '*.la' -o -name '*.prl' \) -print0 | xargs -0 rm -f
+-ifneq ($(BR2_PACKAGE_GDB),y)
+-	rm -rf $(TARGET_DIR)/usr/share/gdb
+-endif
+-ifneq ($(BR2_PACKAGE_BASH),y)
+-	rm -rf $(TARGET_DIR)/usr/share/bash-completion
+-	rm -rf $(TARGET_DIR)/etc/bash_completion.d
+-endif
+-ifneq ($(BR2_PACKAGE_ZSH),y)
+-	rm -rf $(TARGET_DIR)/usr/share/zsh
+-endif
+-	rm -rf $(TARGET_DIR)/usr/man $(TARGET_DIR)/usr/share/man
+-	rm -rf $(TARGET_DIR)/usr/info $(TARGET_DIR)/usr/share/info
+-	rm -rf $(TARGET_DIR)/usr/doc $(TARGET_DIR)/usr/share/doc
+-	rm -rf $(TARGET_DIR)/usr/share/gtk-doc
+-	rmdir $(TARGET_DIR)/usr/share 2>/dev/null || true
+ ifneq ($(BR2_ENABLE_DEBUG):$(BR2_STRIP_strip),y:)
+ 	rm -rf $(TARGET_DIR)/lib/debug $(TARGET_DIR)/usr/lib/debug
+ endif

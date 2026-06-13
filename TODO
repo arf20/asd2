@@ -1,0 +1,7 @@
+# TODO
+
+## ideas
+
+Copy buildroot package definitions into target and come up with some tool/script to
+build buildroot packages into a system
+
